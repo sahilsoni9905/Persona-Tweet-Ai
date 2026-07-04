@@ -1,0 +1,36 @@
+# secrets - never commit
+backend/.env
+
+# private notes - not for public repo
+*.md
+
+# personal data / generated artifacts - not source code
+backend/my_twitter_data/
+backend/data/raw_tweets.json
+backend/data/clean_tweets.json
+backend/data/tweets_with_clusters.json
+backend/data/cluster_plot.png
+backend/data/chroma_store/
+backend/data/history.json
+backend/data/settings.json
+backend/data/scorer_metrics.json
+backend/data/style_classifier.joblib
+backend/data/replied_mentions.json
+
+# python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+
+# jupyter
+.ipynb_checkpoints/
+
+# os junk
+.DS_Store
+Thumbs.db
+
+# logs
+*.log

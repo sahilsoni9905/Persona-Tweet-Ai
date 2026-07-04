@@ -1,0 +1,14 @@
+fastapi
+playwright
+uvicorn[standard]
+python-multipart
+pandas
+sentence-transformers
+scikit-learn
+chromadb
+python-dotenv
+anthropic
+groq
+tweepy
+apscheduler
+joblib

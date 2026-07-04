@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Social Marketer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ── HEADER ───────────────────────────────────────────── -->
+  <header class="app-header">
+    <div class="header-left">
+      <div class="app-logo">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+      </div>
+      <div>
+        <div class="app-name">AI Social Marketer</div>
+        <div class="app-sub">Posts and replies in your voice</div>
+      </div>
+    </div>
+    <div id="corpusStats" class="stats-row"></div>
+  </header>
+
+  <!-- ── TAB NAV ───────────────────────────────────────────── -->
+  <nav class="tab-nav">
+    <button class="tab-btn active" data-tab="corpus">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      Corpus
+    </button>
+    <button class="tab-btn" data-tab="generate">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      Generate
+    </button>
+    <button class="tab-btn" data-tab="schedule">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Schedule
+    </button>
+    <button class="tab-btn" data-tab="history">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      History
+    </button>
+    <button class="tab-btn" data-tab="settings">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+      Settings
+    </button>
+  </nav>
+
+  <!-- ── MAIN ──────────────────────────────────────────────── -->
+  <main class="tab-content">
+
+    <!-- CORPUS ────────────────────────────────────────────── -->
+    <div class="tab-pane active" id="tab-corpus">
+
+      <!-- Import archive -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Import X Archive</div>
+            <div class="card-desc">Place your extracted X archive at <code>backend/my_twitter_data/</code> then click Import. Posts and replies are separated automatically.</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <button class="btn btn-primary" id="importArchiveBtn">Import from my_twitter_data/</button>
+          <p class="status" id="archiveStatus"></p>
+        </div>
+      </div>
+
+      <!-- Import JSON -->
+      <div class="accordion">
+        <button class="accordion-trigger" data-acc="importJson">
+          <span>Import from JSON file</span>
+          <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="accordion-body" id="acc-importJson">
+          <p class="hint">Upload a JSON array of <code>{"id","text","created_at","is_retweet"}</code> objects.</p>
+          <input type="file" id="tweetsFileInput" accept="application/json">
+          <button class="btn" id="importTweetsBtn">Import &amp; rebuild</button>
+          <p class="status" id="importStatus"></p>
+        </div>
+      </div>
+
+      <!-- Add more -->
+      <div class="accordion">
+        <button class="accordion-trigger" data-acc="addMore">
+          <span>Add more to your style</span>
+          <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="accordion-body" id="acc-addMore">
+
+          <div class="field-group">
+            <label class="field-label">Add a tweet by URL (auto-fetches text)</label>
+            <input type="text" id="tweetUrlInput" placeholder="https://twitter.com/user/status/…">
+            <input type="text" id="tweetUrlNote" placeholder="Note: why you liked it (optional)" style="margin-top:6px">
+            <button class="btn" id="addFromUrlBtn">Fetch &amp; add</button>
+            <p class="status" id="urlStatus"></p>
+          </div>
+
+          <div class="field-divider"></div>
+
+          <div class="field-group">
+            <label class="field-label">Add a post example manually</label>
+            <textarea id="addPostText" rows="2" placeholder="Tweet in your style…"></textarea>
+            <button class="btn" id="addPostBtn">Add as post example</button>
+            <p class="status" id="addPostStatus"></p>
+          </div>
+
+          <div class="field-divider"></div>
+
+          <div class="field-group">
+            <label class="field-label">Add a reply example manually</label>
+            <textarea id="addReplyText" rows="2" placeholder="Reply in your style…"></textarea>
+            <button class="btn" id="addReplyBtn">Add as reply example</button>
+            <p class="status" id="addReplyStatus"></p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- GENERATE ───────────────────────────────────────────── -->
+    <div class="tab-pane" id="tab-generate">
+
+      <div class="two-col">
+
+        <!-- Generate post -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Generate a Post</div>
+          </div>
+          <div class="card-body">
+            <p class="hint">AI generates tweet candidates in your voice. Pick one to post or let the scheduler handle it.</p>
+            <button class="btn btn-primary" id="generateBtn">Generate tweets</button>
+            <p class="status" id="generateStatus"></p>
+            <ul id="candidateList" style="margin-top:10px"></ul>
+          </div>
+        </div>
+
+        <!-- Reply to tweet -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Reply to a Tweet</div>
+          </div>
+          <div class="card-body">
+            <p class="hint">Paste the <strong>tweet text</strong> (required) + optionally the URL. We don't fetch tweet content via API to avoid paid read calls.</p>
+            <label class="field-label">Tweet URL <span style="font-weight:400;text-transform:none">(optional — for @username extraction)</span></label>
+            <input type="text" id="replyTweetUrl" placeholder="https://twitter.com/user/status/…">
+            <label class="field-label" style="margin-top:8px">Tweet text <span style="color:var(--red)">*</span></label>
+            <textarea id="replyTweetText" rows="2" placeholder="Paste the tweet text you want to reply to…"></textarea>
+            <button class="btn btn-primary" id="generateReplyBtn" style="margin-top:10px">Generate reply</button>
+            <p class="status" id="replyGenerateStatus"></p>
+            <div id="replyPreview" class="reply-preview hidden">
+              <div class="reply-label">Generated reply</div>
+              <div id="replyPreviewText" class="reply-text"></div>
+              <div class="score" id="replyPreviewScore"></div>
+              <button class="btn btn-primary" id="sendReplyBtn" style="margin-top:8px">Send reply</button>
+              <p class="status" id="replySendStatus"></p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SCHEDULE ───────────────────────────────────────────── -->
+    <div class="tab-pane" id="tab-schedule">
+
+      <div class="two-col">
+
+        <!-- Auto-post -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Auto-Post</div>
+              <div class="card-desc">Generates and posts on a timer.</div>
+            </div>
+            <div id="postSchedulerBadge" class="scheduler-badge off">OFF</div>
+          </div>
+          <div class="card-body">
+            <label class="field-label">Posts per day</label>
+            <input type="number" id="timesPerDayInput" min="1" max="24" value="5">
+            <label class="field-label" style="margin-top:8px">Demo: post every N seconds</label>
+            <input type="number" id="intervalSecondsInput" min="1" value="60">
+            <div class="btn-row">
+              <button class="btn btn-primary" id="startSchedulerBtn">Start</button>
+              <button class="btn btn-danger" id="stopSchedulerBtn">Stop</button>
+              <button class="btn" id="runNowBtn">Post one now</button>
+            </div>
+            <p class="status" id="postSchedulerStatus"></p>
+            <p class="countdown" id="postCountdown"></p>
+          </div>
+        </div>
+
+        <!-- Auto-reply -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Auto-Reply</div>
+              <div class="card-desc">Polls @mentions and replies in your style.</div>
+            </div>
+            <div id="replySchedulerBadge" class="scheduler-badge off">OFF</div>
+          </div>
+          <div class="card-body">
+            <p class="hint">Requires Twitter Basic tier ($100/mo) to read mentions. In draft mode, just logs what it would have replied.</p>
+            <label class="field-label">Check every N minutes</label>
+            <input type="number" id="replyIntervalInput" min="1" max="1440" value="30">
+            <div class="btn-row">
+              <button class="btn btn-primary" id="startReplyBtn">Start</button>
+              <button class="btn btn-danger" id="stopReplyBtn">Stop</button>
+            </div>
+            <p class="status" id="replySchedulerStatus"></p>
+            <p class="countdown" id="replyCountdown"></p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Feed Reply via Browser -->
+      <div class="card" style="margin-top:0">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Feed Reply — Browser Automation</div>
+            <div class="card-desc">Reads your Twitter feed and replies in your voice. Uses Playwright — zero API cost.</div>
+          </div>
+          <div id="feedReplyBadge" class="scheduler-badge off">OFF</div>
+        </div>
+        <div class="card-body">
+
+          <p class="hint">Step 1 — Connect Twitter (one time only). A browser window will open on your screen.</p>
+          <button class="btn" id="browserLoginBtn">Open Twitter Login</button>
+          <p class="status" id="browserStatus"></p>
+
+          <hr class="divider">
+
+          <label class="field-label">Check feed every N minutes</label>
+          <input type="number" id="feedIntervalInput" min="30" max="180" value="45">
+          <label class="field-label" style="margin-top:8px">Max replies per day</label>
+          <input type="number" id="feedMaxPerDayInput" min="1" max="15" value="8">
+          <label class="field-label" style="margin-top:8px">Active hours (start – end, 24h)</label>
+          <div style="display:flex;gap:8px;margin-top:4px">
+            <input type="number" id="feedStartHourInput" min="0" max="23" value="9" style="width:80px">
+            <span style="line-height:32px;color:var(--text-muted)">to</span>
+            <input type="number" id="feedEndHourInput" min="0" max="23" value="23" style="width:80px">
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="startFeedReplyBtn">Start</button>
+            <button class="btn btn-danger" id="stopFeedReplyBtn">Stop</button>
+            <button class="btn" id="feedReplyNowBtn">Try one now</button>
+          </div>
+          <p class="status" id="feedReplyStatus"></p>
+          <p class="countdown" id="feedReplyCountdown"></p>
+          <p class="status" id="feedReplyTodayCount"></p>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- HISTORY ────────────────────────────────────────────── -->
+    <div class="tab-pane" id="tab-history">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Post History</div>
+          <button class="btn" id="refreshHistoryBtn">Refresh</button>
+        </div>
+        <div class="card-body">
+          <ul id="historyList"></ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SETTINGS ───────────────────────────────────────────── -->
+    <div class="tab-pane" id="tab-settings">
+      <div class="card" style="max-width:480px">
+        <div class="card-header">
+          <div class="card-title">Settings</div>
+        </div>
+        <div class="card-body">
+          <label class="field-label">Post mode</label>
+          <select id="postModeSelect">
+            <option value="draft">Draft — logs only, nothing goes live</option>
+            <option value="live">Live — actually posts to Twitter / X</option>
+          </select>
+
+          <label class="field-label" style="margin-top:14px">Style score threshold (0 – 1)</label>
+          <input type="number" id="thresholdInput" min="0" max="1" step="0.05">
+
+          <label class="field-label" style="margin-top:14px">Max LLM retries before skipping</label>
+          <input type="number" id="maxRetriesInput" min="0" max="5" step="1">
+
+          <button class="btn btn-primary" id="saveSettingsBtn" style="margin-top:18px">Save settings</button>
+          <p class="status" id="settingsStatus"></p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+    // ── Tab switching ─────────────────────────────────────────
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+        document.querySelectorAll(".tab-pane").forEach(p => p.classList.remove("active"));
+        btn.classList.add("active");
+        document.getElementById("tab-" + btn.dataset.tab).classList.add("active");
+      });
+    });
+
+    // ── Accordion ─────────────────────────────────────────────
+    document.querySelectorAll(".accordion-trigger").forEach(trigger => {
+      trigger.addEventListener("click", () => {
+        const body = document.getElementById("acc-" + trigger.dataset.acc);
+        const open = trigger.classList.toggle("open");
+        body.style.maxHeight = open ? body.scrollHeight + "px" : "0";
+      });
+    });
+  </script>
+</body>
+</html>
