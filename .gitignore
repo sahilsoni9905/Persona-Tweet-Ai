@@ -17,6 +17,7 @@ backend/data/settings.json
 backend/data/scorer_metrics.json
 backend/data/style_classifier.joblib
 backend/data/replied_mentions.json
+backend/data/twitter_session.json
 
 # python
 __pycache__/
