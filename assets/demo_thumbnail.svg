@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360" width="480" height="360">
+  <image href="https://img.youtube.com/vi/zOGfuBoqnOc/hqdefault.jpg" width="480" height="360" preserveAspectRatio="xMidYMid slice"/>
+  <rect width="480" height="360" fill="#000000" opacity="0.12"/>
+  <g transform="translate(240,180)">
+    <rect x="-46" y="-32" width="92" height="64" rx="14" fill="#FF0000" opacity="0.92"/>
+    <path d="M -12,-18 L 26,0 L -12,18 Z" fill="#ffffff"/>
+  </g>
+</svg>

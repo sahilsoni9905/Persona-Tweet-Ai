@@ -6,7 +6,7 @@
 
 ## Demo
 
-[![Persona Tweet — Full Demo](https://img.youtube.com/vi/zOGfuBoqnOc/0.jpg)](https://www.youtube.com/watch?v=zOGfuBoqnOc)
+[![Persona Tweet — Full Demo](assets/demo_thumbnail.svg)](https://www.youtube.com/watch?v=zOGfuBoqnOc)
 
 > Click to watch the full walkthrough on YouTube.
 
