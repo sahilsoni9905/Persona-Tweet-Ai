@@ -3,6 +3,7 @@ backend/.env
 
 # private notes - not for public repo
 *.md
+!README.md
 
 # personal data / generated artifacts - not source code
 backend/my_twitter_data/
